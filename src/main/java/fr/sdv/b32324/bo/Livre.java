@@ -2,10 +2,13 @@ package fr.sdv.b32324.bo;
 
 import jakarta.persistence.*;
 
-@Entity
-@Table(name="LIVRE")
+import java.util.List;
 
+
+@Entity
+@Table(name = "LIVRE")
 public class Livre {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -17,16 +20,16 @@ public class Livre {
     @Column(name = "AUTEUR")
     private String auteur;
 
+    public String getTitre() {
+        return titre;
+    }
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getTitre() {
-        return titre;
     }
 
     public void setTitre(String titre) {
@@ -41,19 +44,16 @@ public class Livre {
         this.auteur = auteur;
     }
 
-    public Livre() {}
-
-    @Override
-    public String toString() {
-        return "Livre{" +
-                "id=" + id +
-                ", titre='" + titre + '\'' +
-                ", auteur='" + auteur + '\'' +
-                '}';
+    public List<Emprunt> getEmprunts() {
+        return emprunts;
     }
 
-    public Livre(String titre, String auteur) {
-        this.titre = titre;
-        this.auteur = auteur;
+    public void setEmprunts(List<Emprunt> emprunts) {
+        this.emprunts = emprunts;
     }
+
+    @ManyToMany(mappedBy = "livres")
+    private List<Emprunt> emprunts;
+
+    // getters et setters
 }
